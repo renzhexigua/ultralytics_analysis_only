@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: 'cb260c243ffa3e0cc84820095cd88be2f5db86ca'
       - name: Git config
         run: |
           git config --global user.name "test"
@@ -52,9 +53,7 @@ jobs:
               print('Ready to publish new version to PyPI ✅.')
         id: check_pypi
       - name: Build package
-        if: (github.event_name == 'push' || github.event.inputs.pypi == 'true') && steps.check_pypi.outputs.increment == 'True'
         run: python -m build
       - name: Publish to PyPI
         continue-on-error: true
-        if: (github.event_name == 'push' || github.event.inputs.pypi == 'true') && steps.check_pypi.outputs.increment == 'True'
         uses: pypa/gh-action-pypi-publish@release/v1
