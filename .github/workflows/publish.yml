@@ -54,6 +54,11 @@ jobs:
         id: check_pypi
       - name: Build package
         run: python -m build
+      - name: Artifact package
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
       - name: Publish to PyPI
         continue-on-error: true
         uses: pypa/gh-action-pypi-publish@release/v1
